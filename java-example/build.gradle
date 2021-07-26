@@ -1,0 +1,21 @@
+import org.gradle.api.tasks.testing.Test
+apply plugin: 'java'
+group 'ru.stqa'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.4.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testCompile ('org.junit.jupiter:junit-jupiter:5.7.0')
+    implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-beta-3'
+}
+
+test() {
+    useTestNG(){
+    }
+}
