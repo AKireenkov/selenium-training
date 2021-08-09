@@ -40,6 +40,21 @@ public class MyFirstTest extends TestBase {
     }
 
     @Test
+    public void liteCartCheckStickers() {
+        driver.get("http://localhost/litecart/en/");
+        driver.findElement(By.name("email")).sendKeys("test@test.ru");
+        driver.findElement(By.name("password")).sendKeys("test");
+        driver.findElement(By.name("login")).click();
+        wait.until(elementToBeClickable(By.linkText("Logout")));
+
+        List<WebElement> elements = driver.findElements(By.cssSelector(".image-wrapper div"));
+        for (int i = 0; i < elements.size(); i++) {
+            System.out.println(i);
+            Assert.assertTrue(elements.get(i).getAttribute("class").contains("sticker "));
+        }
+    }
+
+    @Test
     public void waitTest() {
         driver.get("https://www.google.com");
         driver.findElement(By.name("q")).sendKeys("123");
