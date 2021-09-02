@@ -4,12 +4,34 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 
-public class TestBase {
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public abstract class TestBase {
     public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
     public WebDriver driver;
     public WebDriverWait wait;
+    FileInputStream fis;
+    Properties property = new Properties();
+
+
+    public void loadProperty() throws IOException {
+        fis = new FileInputStream("src/main/resources/config.properties");
+        property.load(fis);
+    }
+
+    public void login(String url, String user, String password) throws IOException {
+        loadProperty();
+        driver.get(property.getProperty(url));
+        driver.findElement(By.name("username")).sendKeys(property.getProperty(user));
+        driver.findElement(By.name("password")).sendKeys(property.getProperty(password));
+        driver.findElement(By.name("login")).click();
+    }
 
     public boolean isElementPresent(By locator) {    //если элемент не найден
         try {
@@ -30,7 +52,7 @@ public class TestBase {
     }
 
     @Deprecated
-    @BeforeMethod
+    @BeforeTest
     public void start() {
         if (tlDriver.get() != null) {
             driver = tlDriver.get();
@@ -44,7 +66,7 @@ public class TestBase {
         wait = new WebDriverWait(driver, 10);
     }
 
-    @AfterMethod
+    @AfterTest
     public void stop() {
         driver.quit();
         driver = null;
