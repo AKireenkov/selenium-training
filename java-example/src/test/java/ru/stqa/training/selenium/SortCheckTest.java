@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SortCheckTest extends TestBase {
     @Test
     public void sortCheckCountries() throws IOException {
-        login("countries", "alogin", "apassword");
+        Adminlogin("countries", "ausername", "apassword");
         findValueAndCheckSort(".row td:nth-child(5)");
 
         List<WebElement> rows = driver.findElements(By.cssSelector(".row"));
@@ -26,12 +26,14 @@ public class SortCheckTest extends TestBase {
         }
         selectListValue(countries);
     }
+
     @Test
-    public void sortCheckGeoZones () throws IOException {
-        login("geozones", "alogin", "apassword");
-        List <WebElement> list = driver.findElements(By.cssSelector(".row td:nth-child(3)"));
-        List <String> values = new ArrayList<>();
-        list.forEach(t->values.add(t.getText()));
+    public void sortCheckGeoZones() throws IOException {
+        Adminlogin("geozones", "ausername", "apassword");
+        List<WebElement> list = driver.findElements(By.cssSelector(".row td:nth-child(3)"));
+        List<String> values = new ArrayList<>();
+        list.forEach(t -> values.add(t.getText()));
+
         selectListValue(values);
 
     }

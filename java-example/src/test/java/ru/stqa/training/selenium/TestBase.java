@@ -3,9 +3,7 @@ package ru.stqa.training.selenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import java.io.FileInputStream;
@@ -25,10 +23,18 @@ public abstract class TestBase {
         property.load(fis);
     }
 
-    public void login(String url, String user, String password) throws IOException {
+    public void Adminlogin(String url, String username, String password) throws IOException {
         loadProperty();
         driver.get(property.getProperty(url));
-        driver.findElement(By.name("username")).sendKeys(property.getProperty(user));
+        driver.findElement(By.name("username")).sendKeys(property.getProperty(username));
+        driver.findElement(By.name("password")).sendKeys(property.getProperty(password));
+        driver.findElement(By.name("login")).click();
+    }
+
+    public void login(String url, String email, String password) throws IOException {
+        loadProperty();
+        driver.get(property.getProperty(url));
+        driver.findElement(By.name("email")).sendKeys(property.getProperty(email));
         driver.findElement(By.name("password")).sendKeys(property.getProperty(password));
         driver.findElement(By.name("login")).click();
     }
