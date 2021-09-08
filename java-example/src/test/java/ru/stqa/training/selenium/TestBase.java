@@ -17,26 +17,29 @@ public abstract class TestBase {
     FileInputStream fis;
     Properties property = new Properties();
 
-
     public void loadProperty() throws IOException {
         fis = new FileInputStream("src/main/resources/config.properties");
         property.load(fis);
     }
 
-    public void Adminlogin(String url, String username, String password) throws IOException {
-        loadProperty();
-        driver.get(property.getProperty(url));
-        driver.findElement(By.name("username")).sendKeys(property.getProperty(username));
-        driver.findElement(By.name("password")).sendKeys(property.getProperty(password));
+    public void Adminlogin(String username, String password) {
+        driver.findElement(By.name("username")).sendKeys(username);
+        driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("login")).click();
     }
 
-    public void login(String url, String email, String password) throws IOException {
-        loadProperty();
-        driver.get(property.getProperty(url));
-        driver.findElement(By.name("email")).sendKeys(property.getProperty(email));
-        driver.findElement(By.name("password")).sendKeys(property.getProperty(password));
+    public void login(String email, String password) {
+        driver.findElement(By.name("email")).sendKeys(email);
+        driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("login")).click();
+    }
+
+    public void goTo(String url) {
+        driver.get(url);
+    }
+
+    public void click(By value) {
+        driver.findElement(value).click();
     }
 
     public boolean isElementPresent(By locator) {    //если элемент не найден
@@ -59,7 +62,8 @@ public abstract class TestBase {
 
     @Deprecated
     @BeforeTest
-    public void start() {
+    public void start() throws IOException {
+        loadProperty();
         if (tlDriver.get() != null) {
             driver = tlDriver.get();
             wait = new WebDriverWait(driver, 10);

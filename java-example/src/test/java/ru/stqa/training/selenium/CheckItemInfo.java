@@ -13,17 +13,16 @@ public class CheckItemInfo extends TestBase {
 
     @Test
     public void checkItemInfo() throws IOException {
-
-        login("home", "username", "password");
+        goTo(property.getProperty("home"));
+        login(property.getProperty("email"), property.getProperty("password"));
         List<String> before = getValues("#box-campaigns .name");
-        driver.findElement(By.cssSelector("#box-campaigns .link")).click();
+        click(By.cssSelector("#box-campaigns .link"));
         List<String> after = getValues("#box-product .title");
 
         System.out.println(before);
         System.out.println(after);
         softly.assertThat(before).isEqualTo(after);
         softly.assertAll();
-
     }
 
     private List<String> getValues(String value) {
