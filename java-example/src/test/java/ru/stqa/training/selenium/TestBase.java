@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -22,7 +23,7 @@ public abstract class TestBase {
         property.load(fis);
     }
 
-    public void Adminlogin(String username, String password) {
+    public void adminlogin(String username, String password) {
         driver.findElement(By.name("username")).sendKeys(username);
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("login")).click();
@@ -38,8 +39,25 @@ public abstract class TestBase {
         driver.get(url);
     }
 
-    public void click(By value) {
-        driver.findElement(value).click();
+    public void click(By locator) {
+        driver.findElement(locator).click();
+    }
+
+    public void type(By locator, String text) {
+        click(locator);
+        if (text != null) {
+            String existingText = driver.findElement(locator).getAttribute("value");
+            if (!text.equals(existingText)) {
+                driver.findElement(locator).clear();
+                driver.findElement(locator).sendKeys(text);
+            }
+        }
+    }
+
+    public void attach(By locator, File file) {
+        if (file != null) {
+            driver.findElement(locator).sendKeys(file.getAbsolutePath());
+        }
     }
 
     public boolean isElementPresent(By locator) {    //если элемент не найден

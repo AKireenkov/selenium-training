@@ -14,7 +14,7 @@ public class SortCheckTest extends TestBase {
     @Test
     public void sortCheckCountries() {
         goTo(property.getProperty("countries"));
-        Adminlogin(property.getProperty("ausername"), property.getProperty("apassword"));
+        adminlogin(property.getProperty("ausername"), property.getProperty("apassword"));
         findValueAndCheckSort(".row td:nth-child(5)");
         List<WebElement> rows = driver.findElements(By.cssSelector(".row"));
         List<String> countries = new ArrayList<>();
@@ -30,7 +30,7 @@ public class SortCheckTest extends TestBase {
     @Test
     public void sortCheckGeoZones() {
         goTo(property.getProperty("geozones"));
-        Adminlogin(property.getProperty("ausername"), property.getProperty("apassword"));
+        adminlogin(property.getProperty("ausername"), property.getProperty("apassword"));
         List<WebElement> list = driver.findElements(By.cssSelector(".row td:nth-child(3)"));
         List<String> values = new ArrayList<>();
         list.forEach(t -> values.add(t.getText()));
