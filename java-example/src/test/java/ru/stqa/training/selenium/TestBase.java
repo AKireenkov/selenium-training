@@ -2,6 +2,7 @@ package ru.stqa.training.selenium;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -58,6 +59,11 @@ public abstract class TestBase {
         if (file != null) {
             driver.findElement(locator).sendKeys(file.getAbsolutePath());
         }
+    }
+
+    public Select select(By locator) {
+        Select value = new Select(driver.findElement(locator));
+        return value;
     }
 
     public boolean isElementPresent(By locator) {    //если элемент не найден
