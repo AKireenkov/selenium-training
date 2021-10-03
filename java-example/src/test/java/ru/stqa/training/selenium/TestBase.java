@@ -2,6 +2,7 @@ package ru.stqa.training.selenium;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 public abstract class TestBase {
     public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
@@ -64,6 +66,16 @@ public abstract class TestBase {
     public Select select(By locator) {
         Select value = new Select(driver.findElement(locator));
         return value;
+    }
+
+    public ExpectedCondition<String> anyWindowOtherThan(Set<String> oldWindows) {   //возвращает id нового открытого окна
+        return new ExpectedCondition<String>() {
+            public String apply(WebDriver driver) {
+                Set<String> handles = driver.getWindowHandles();
+                handles.removeAll(oldWindows);
+                return handles.size() > 0 ? handles.iterator().next() : null;
+            }
+        };
     }
 
     public boolean isElementPresent(By locator) {    //если элемент не найден
