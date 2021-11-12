@@ -1,5 +1,6 @@
 package ru.stqa.training.selenium;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -10,6 +11,13 @@ import java.util.List;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class MyFirstTest extends TestBase {
+
+    @Test
+    public void getBrowserLogs() {
+        driver.navigate().to("http://selenium2.ru");
+        System.out.println(driver.manage().logs().getAvailableLogTypes());
+        driver.manage().logs().get("browser").forEach(System.out::println);
+    }
 
     @Test
     public void liteCartCheckSection() {
