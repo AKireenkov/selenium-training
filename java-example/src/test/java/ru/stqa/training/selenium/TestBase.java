@@ -49,18 +49,27 @@ public abstract class TestBase {
         driver = null;
     }
 
+    /**
+     * Позволяет писать логи
+     */
     public class MyListener extends AbstractWebDriverEventListener {
+
         @Override
         public void onException(Throwable throwable, WebDriver driver) {
             System.out.println(throwable);
+            //В случае исключения, сохраняем скрин
+            /*
             File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             File screen = new File("screen-" + System.currentTimeMillis() + ".png");
+
+
             try {
                 FileUtils.copyFile(tmp, screen);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println(screen);
+            */
         }
 
         @Override
