@@ -1,1 +1,1 @@
-# selenium-training
+# Практика из курса "Selenium. Полное руководство"
