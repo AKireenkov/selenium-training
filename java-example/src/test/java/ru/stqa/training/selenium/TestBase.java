@@ -1,6 +1,5 @@
 package ru.stqa.training.selenium;
 
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,6 +10,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import ru.stqa.training.selenium.pages.CartPage;
+import ru.stqa.training.selenium.pages.ItemPage;
+import ru.stqa.training.selenium.pages.MainPage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,12 +20,16 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
 
-public abstract class TestBase {
+public class TestBase {
+    public static MainPage mainPage;
+    public static ItemPage itemPage;
+    public static CartPage cartPage;
     public static ThreadLocal<EventFiringWebDriver> tlDriver = new ThreadLocal<>();
     public EventFiringWebDriver driver;
     public WebDriverWait wait;
     FileInputStream fis;
     Properties property = new Properties();
+
 
     @Deprecated
     @BeforeTest
@@ -41,6 +47,9 @@ public abstract class TestBase {
         tlDriver.set(driver);
         System.out.println(((HasCapabilities) driver).getCapabilities());
         wait = new WebDriverWait(driver, 10);
+        mainPage = new MainPage(driver);
+        itemPage = new ItemPage(driver);
+        cartPage = new CartPage(driver);
     }
 
     @AfterTest
